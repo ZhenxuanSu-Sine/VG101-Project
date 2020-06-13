@@ -1,0 +1,10 @@
+function [section1, section2] = connect(point1, point2)
+%CONNECT 此处显示有关此函数的摘要
+%   此处显示详细说明
+    assert(section1 = point1.belonging);
+    assert(section2 = point2.belonging);
+    point1.connection = point2;
+    point2.connection = point1;
+    section2.position = section1.position + point1.relative_position - point2.relative_position;
+end
+
