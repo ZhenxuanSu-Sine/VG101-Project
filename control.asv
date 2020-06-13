@@ -1,0 +1,5 @@
+my_robot = robot();
+my_robot.draw();
+
+left_leg = my_robot.legs{1}{1};
+rotation_point = left_leg.connection_points{2}.relative

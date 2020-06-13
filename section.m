@@ -1,4 +1,4 @@
-classdef section
+classdef section < handle
     %UNTITLED 此处显示有关此类的摘要
     %   此处显示详细说明
     
@@ -22,11 +22,42 @@ classdef section
         function [] = section_plot(obj)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
-            default_color = 'r';
+            default_color = 'y';
             color = default_color;
             points = obj.position + obj.outline;
             patch(points(:, 1), points(:, 2), color);
         end
+        
+        function [] = update_position(obj, last_obj)
+            obj
+            num_connections = size(obj.connection_points, 2)
+            for i =1: num_connections
+                if obj.connection_points{i}.connection ~= NaN
+                    disp('a');
+                    next_obj = obj.connection_points{i}.connection.belonging;
+                    if next_obj == last_obj
+                        continue
+                    end
+                    next_obj.position = obj.position + obj.connection_points{i}.relative_position - obj.connection_points{i}.connection.relative_position;
+                    next_obj.update_position(obj);
+                end
+            end
+        end
+        
+        function [] = rotation(obj, phi)
+            phi = -phi;
+            rotation_matrix = [cos(phi), -sin(phi); sin(phi), cos(phi)];
+            % obj.position = (obj.position - rotation_point) * rotation_matrix + rotation_point;
+            obj.position = obj.position * rotation_matrix;
+            % obj.outline = (obj.outline - rotation_point) * rotation_matrix + rotation_point;
+            obj.outline = obj.outline * rotation_matrix;
+            num_connection_points = size(obj.connection_points, 2);
+            for i = 1: num_connection_points
+                % obj.connection_points{i}.relative_position = obj.connection_points{i}.relative_position * rotation_matrix;
+                obj.connection_points{i}.relative_position = obj.connection_points{i}.relative_position * rotation_matrix;
+            end
+        end
+        
     end
 end
 

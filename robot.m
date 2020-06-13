@@ -44,20 +44,22 @@ classdef robot
                 {section(arm_outline, flip(arm_connection_points, 1)), 
                 section(arm_outline, flip(arm_connection_points, 1))}};
             
-            [obj.head, obj.chest] = connect(obj.head, obj.chest, 1, 2);
-            [obj.chest, obj.waist] = connect(obj.chest, obj.waist, 1, 1);
+            connect(obj.head.connection_points{1}, obj.chest.connection_points{2});
+            
+            connect(obj.chest.connection_points{1}, obj.waist.connection_points{1});
+            
             for i = 1: 2
-                [obj.waist, obj.legs{i}{1}] = connect(obj.waist, obj.legs{i}{2}, i + 1, 2);
-                [obj.legs{i}{1}, obj.legs{i}{2}] = connect(obj.legs{i}{1}, obj.legs{i}{2}, 1, 2);
+                connect(obj.waist.connection_points{i + 1}, obj.legs{i}{1}.connection_points{2});
+                connect(obj.legs{i}{1}.connection_points{1}, obj.legs{i}{2}.connection_points{2});
             end
+            
             for i = 1: 2
-                [obj.chest, obj.arms{i}{1}] = connect(obj.chest, obj.arms{i}{1}, 2 + i, 2);
-                [obj.arms{i}{1}, obj.arms{i}{2}] = connect(obj.arms{i}{1}, obj.arms{i}{2}, 1, 2);
+                connect(obj.chest.connection_points{2 + i}, obj.arms{i}{1}.connection_points{2});
+                connect(obj.arms{i}{1}.connection_points{1}, obj.arms{i}{2}.connection_points{2});
             end
             
             obj.sections = {obj.head, obj.chest, obj.waist, obj.legs{1}{1}, obj.legs{1}{2}, obj.legs{2}{1}, obj.legs{2}{2}, obj.arms{1}{1}, obj.arms{1}{2}, obj.arms{2}{1}, obj.arms{2}{2}};
             
-            obj.draw();
         end
         
         function [] = draw(obj)
@@ -71,6 +73,7 @@ classdef robot
                 obj.sections{i}.section_plot();
             end
         end
+        
     end
 end
 
