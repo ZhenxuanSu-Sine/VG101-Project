@@ -66,12 +66,13 @@ classdef robot
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             num_sections = size(obj.sections, 2);
-            figure;
+            clf;
             hold on;
             axis('equal')
             for i = 1: num_sections
                 obj.sections{i}.section_plot();
             end
+            hold off;
         end
         
     end

@@ -29,11 +29,9 @@ classdef section < handle
         end
         
         function [] = update_position(obj, last_obj)
-            obj
-            num_connections = size(obj.connection_points, 2)
+            num_connections = size(obj.connection_points, 2);
             for i =1: num_connections
                 if obj.connection_points{i}.connection ~= NaN
-                    disp('a');
                     next_obj = obj.connection_points{i}.connection.belonging;
                     if next_obj == last_obj
                         continue
