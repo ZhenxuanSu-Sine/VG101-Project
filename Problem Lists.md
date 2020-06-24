@@ -10,5 +10,6 @@
          2. Movement w.r.t. Given Music
       3. Customizable Skin
       4. Ninjitsu Art of Duplication
+      5. Scenes
    2. Three-Dimensional Robot Movement Simulation
 
