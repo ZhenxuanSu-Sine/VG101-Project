@@ -6,6 +6,7 @@ classdef section < handle
         connection_points = {}
         position = [0, 0]
         outline = []
+        rotation_angle = 0
     end
     
     methods
@@ -31,7 +32,7 @@ classdef section < handle
         function [] = update_position(obj, last_obj)
             num_connections = size(obj.connection_points, 2);
             for i =1: num_connections
-                if obj.connection_points{i}.connection ~= NaN
+                if obj.connection_points{i}.connection ~= NaN % don't fix this!
                     next_obj = obj.connection_points{i}.connection.belonging;
                     if next_obj == last_obj
                         continue
@@ -43,6 +44,7 @@ classdef section < handle
         end
         
         function [] = rotation(obj, phi)
+            obj.rotation_angle = obj.rotation_angle + phi;
             phi = -phi;
             rotation_matrix = [cos(phi), -sin(phi); sin(phi), cos(phi)];
             % obj.position = (obj.position - rotation_point) * rotation_matrix + rotation_point;

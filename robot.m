@@ -4,11 +4,20 @@ classdef robot
     
     properties
         sections = {}
+        rotation_angle = [];
         head
         chest
         arms = {{}, {}}
+        left_arm
+        left_forearm
+        right_arm
+        right_forearm
         waist
         legs = {{}, {}}
+        left_thigh
+        left_calf
+        right_thigh
+        right_calf
         position = [0, 0]
     end
     
@@ -73,6 +82,40 @@ classdef robot
                 obj.sections{i}.section_plot();
             end
             hold off;
+        end
+        
+        function new_robot = copy(obj)
+            % get a copy of the robot obj
+            % cannot use "=" because sections of robot are handle
+            new_robot = robot();
+            num_sections = size(new_robot.sections, 2);
+            for i = 1: num_sections
+                new_robot.sections{i}.rotation(obj.sections{i}.rotation_angle);
+            end
+        end
+        
+        function update_position(obj)
+            obj.head.update_position(NaN);
+        end
+        
+        function uniform_move(obj, target_posture, time, fps) 
+            % unit of time is second
+            section_number = size(obj.sections, 2);
+            assert(section_number == size(target_posture.sections, 2));
+            delta_angle = zeros(1, section_number);
+            for i = 1: section_number
+                delta_angle(i) = target_posture.sections{i}.rotation_angle - obj.sections{i}.rotation_angle;
+            end
+            total_step = floor(time * fps);
+            for step = 1: total_step
+                for i = 1: section_number 
+                    obj.sections{i}.rotation(delta_angle(i) / total_step);
+                end
+                obj.update_position();
+                obj.draw();
+                pause(1 / fps);
+            end
+            pause(time - total_step / fps);
         end
         
     end
