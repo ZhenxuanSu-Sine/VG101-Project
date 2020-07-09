@@ -76,7 +76,11 @@ classdef robot
             %   此处显示详细说明
             num_sections = size(obj.sections, 2);
             % clf;
+<<<<<<< HEAD
             cla
+=======
+            delete(allchild(gca));
+>>>>>>> a04b33b824c280576303956111ccee600a0858ef
             hold on;
             axis('equal')
             for i = 1: num_sections
