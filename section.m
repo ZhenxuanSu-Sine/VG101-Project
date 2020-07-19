@@ -28,7 +28,7 @@ classdef section < handle
             points = obj.position + obj.outline + robot_position;
             patch(current_axes, points(:, 1), points(:, 2), color);
         end
-        
+         
         function [] = update_position(obj, last_obj)
             num_connections = size(obj.connection_points, 2);
             for i =1: num_connections

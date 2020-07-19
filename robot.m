@@ -80,6 +80,7 @@ classdef robot
             
             obj.sections = {obj.head, obj.chest, obj.waist, obj.legs{1}{1}, obj.legs{1}{2}, obj.legs{2}{1}, obj.legs{2}{2}, obj.arms{1}{1}, obj.arms{1}{2}, obj.arms{2}{1}, obj.arms{2}{2}};
             
+            obj = obj.update_position();
         end
         
         function [] = draw(obj, current_axes)
