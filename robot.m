@@ -19,12 +19,18 @@ classdef robot
         right_thigh
         right_calf
         position = [0, 0]
+        name = 'unnamed'
+        
+        on_ground_foot = 1
+        on_ground_foot_x = 0
     end
     
     methods
-        function obj = robot()
+        function obj = robot(name)
             %ROBOT 构造此类的实例
             %   此处显示详细说明
+            obj.name = name;
+            
             head_outline = [0, 0; 0, 2; 2, 2; 2, 0];
             head_connection_points = [1, 0];
             obj.head = section(head_outline, head_connection_points);
@@ -44,6 +50,11 @@ classdef robot
                 section(leg_outline, leg_connection_points)}, 
                 {section(leg_outline, leg_connection_points), 
                 section(leg_outline, leg_connection_points)}};
+            
+            obj.left_thigh = obj.legs{1}{1};
+            obj.left_calf = obj.legs{1}{2};
+            obj.right_thigh = obj.legs{2}{1};
+            obj.right_calf = obj.legs{2}{2};
             
             arm_length = 2.5;
             arm_outline = [0, 0; arm_length, 0; arm_length, 0.5; 0, 0.5];
@@ -71,18 +82,18 @@ classdef robot
             
         end
         
-        function [] = draw(obj)
+        function [] = draw(obj, current_axes)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             num_sections = size(obj.sections, 2);
             % clf;
-            cla;
-            hold on;
-            axis('equal')
+            cla(current_axes);
+            % hold on;
+            
             for i = 1: num_sections
-                obj.sections{i}.section_plot();
+                obj.sections{i}.section_plot(current_axes, obj.position);
             end
-            hold off;
+            % hold off;
         end
         
         function new_robot = copy(obj)
@@ -95,12 +106,31 @@ classdef robot
             end
         end
         
-        function update_position(obj)
+        function obj = update_position(obj)
+            % get all sections connected
             obj.head.update_position(NaN);
+            
+            calf_points = [obj.left_calf.outline + obj.left_calf.position; obj.right_calf.outline + obj.right_calf.position];
+            [min_y, idx] = min(calf_points(:, 2));
+            % obj.on_ground_foot
+            if idx ~= obj.on_ground_foot
+                obj.on_ground_foot_x = calf_points(idx, 1) + obj.position(1);
+%                 obj.name
+%                 calf_points(:, 2)
+%                 origin = obj.on_ground_foot
+%                 new = idx
+                obj.on_ground_foot = idx;
+%                 system('pause');
+            end
+            obj.position = [obj.on_ground_foot_x - calf_points(idx, 1), -min_y];
+            % obj
         end
         
-        function uniform_move(obj, target_posture, time, fps) 
+        function obj = uniform_move(obj, target_posture, time, fps, current_axes) 
             % unit of time is second
+%             disp('start uniform move');
+%             obj
+            
             section_number = size(obj.sections, 2);
             assert(section_number == size(target_posture.sections, 2));
             delta_angle = zeros(1, section_number);
@@ -109,14 +139,18 @@ classdef robot
             end
             total_step = floor(time * fps);
             for step = 1: total_step
+                
                 for i = 1: section_number 
+%                     obj
                     obj.sections{i}.rotation(delta_angle(i) / total_step);
                 end
-                obj.update_position();
-                obj.draw();
+                obj = obj.update_position();
+                obj.draw(current_axes);
                 pause(1 / fps);
             end
             pause(time - total_step / fps);
+            
+%             disp('end uniform move')
         end
         
     end

@@ -20,13 +20,13 @@ classdef section < handle
             end
         end
         
-        function [] = section_plot(obj)
+        function [] = section_plot(obj, current_axes, robot_position)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             default_color = 'y';
             color = default_color;
-            points = obj.position + obj.outline;
-            patch(points(:, 1), points(:, 2), color);
+            points = obj.position + obj.outline + robot_position;
+            patch(current_axes, points(:, 1), points(:, 2), color);
         end
         
         function [] = update_position(obj, last_obj)

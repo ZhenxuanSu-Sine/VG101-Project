@@ -1,18 +1,34 @@
-R = robot();
+function random_dance(current_axes)
 
-per_time = 1;
-total_time = 30;
-fps = 144;
+    R = robot('R');
 
-max_angle = 0.5;
+    per_time = 1;
+    total_time = 10;
+    fps = 144;
 
-for i = 1: total_time
-    per_time = 0.2 / log(i + 1);
-    posture = robot();
-    num_sections = size(posture.sections, 2);
-    for j = 1: num_sections
-        angle = rand() * max_angle * 2 - max_angle;
-        posture.sections{j}.rotation(angle);
+    max_angle = 0.5;
+
+    for i = 1: total_time
+        per_time = 1 / log(i + 1);
+        posture = robot('P');
+        num_sections = size(posture.sections, 2);
+        for j = 1: num_sections
+            angle = rand() * max_angle * 2 - max_angle;
+            posture.sections{j}.rotation(angle);
+        end
+%         disp('before uniform move');
+%         
+%         R
+%         
+%         disp('end before');
+        
+        R = R.uniform_move(posture, per_time, fps, current_axes);
+        
+%         disp('after uniform move');
+%         
+%         R
+%         
+%         disp('end after');
     end
-    R.uniform_move(posture, per_time, fps);
+
 end
