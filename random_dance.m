@@ -22,7 +22,7 @@ function random_dance(current_axes)
 %         
 %         disp('end before');
         
-        R = R.uniform_move(posture, per_time, fps, current_axes);
+        R.uniform_move(posture, per_time, fps, current_axes);
         
 %         disp('after uniform move');
 %         

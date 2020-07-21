@@ -1,4 +1,4 @@
-classdef robot
+classdef robot < handle
     %ROBOT 此处显示有关此类的摘要
     %   此处显示详细说明
     
@@ -64,6 +64,11 @@ classdef robot
                 {section(arm_outline, flip(arm_connection_points, 1)), 
                 section(arm_outline, flip(arm_connection_points, 1))}};
             
+            obj.left_arm = obj.arms{1}{1};
+            obj.left_forearm = obj.arms{1}{2};
+            obj.right_arm = obj.arms{2}{1};
+            obj.right_forearm = obj.arms{2}{2};
+            
             connect(obj.head.connection_points{1}, obj.chest.connection_points{2});
             
             connect(obj.chest.connection_points{1}, obj.waist.connection_points{1});
@@ -80,10 +85,10 @@ classdef robot
             
             obj.sections = {obj.head, obj.chest, obj.waist, obj.legs{1}{1}, obj.legs{1}{2}, obj.legs{2}{1}, obj.legs{2}{2}, obj.arms{1}{1}, obj.arms{1}{2}, obj.arms{2}{1}, obj.arms{2}{2}};
             
-            obj = obj.update_position();
+            obj.update_position();
         end
         
-        function [] = draw(obj, current_axes)
+        function draw(obj, current_axes)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             num_sections = size(obj.sections, 2);
@@ -107,7 +112,7 @@ classdef robot
             end
         end
         
-        function obj = update_position(obj)
+        function update_position(obj)
             % get all sections connected
             obj.head.update_position(NaN);
             
@@ -127,7 +132,7 @@ classdef robot
             % obj
         end
         
-        function obj = uniform_move(obj, target_posture, time, fps, current_axes) 
+        function uniform_move(obj, target_posture, time, fps, current_axes) 
             % unit of time is second
 %             disp('start uniform move');
 %             obj
@@ -145,7 +150,7 @@ classdef robot
 %                     obj
                     obj.sections{i}.rotation(delta_angle(i) / total_step);
                 end
-                obj = obj.update_position();
+                obj.update_position();
                 obj.draw(current_axes);
                 pause(1 / fps);
             end
