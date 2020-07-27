@@ -23,6 +23,8 @@ classdef robot < handle
         
         on_ground_foot = 1
         on_ground_foot_x = 0
+        
+        random_threshold = [-pi / 2, pi / 2]
     end
     
     methods
@@ -86,6 +88,8 @@ classdef robot < handle
             obj.sections = {obj.head, obj.chest, obj.waist, obj.legs{1}{1}, obj.legs{1}{2}, obj.legs{2}{1}, obj.legs{2}{2}, obj.arms{1}{1}, obj.arms{1}{2}, obj.arms{2}{1}, obj.arms{2}{2}};
             
             obj.update_position();
+            
+            obj.random_threshold = repmat([-pi / 4, pi / 4], length(obj.sections), 1);
         end
         
         function draw(obj, current_axes)
@@ -158,6 +162,7 @@ classdef robot < handle
             
 %             disp('end uniform move')
         end
+
         
     end
 end
