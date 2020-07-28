@@ -92,6 +92,14 @@ classdef robot < handle
             obj.random_threshold = repmat([-pi / 4, pi / 4], length(obj.sections), 1);
         end
         
+        function obj = robot_with_angle(name, angle)
+            obj = robot(name);
+            num_section = length(obj.sections);
+            for i = 1: num_section
+                obj.sections{i}.rotation(angle(i));
+            end
+        end
+        
         function draw(obj, current_axes)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
@@ -109,7 +117,7 @@ classdef robot < handle
         function new_robot = copy(obj)
             % get a copy of the robot obj
             % cannot use "=" because sections of robot are handle
-            new_robot = robot();
+            new_robot = robot(obj.name);
             num_sections = size(new_robot.sections, 2);
             for i = 1: num_sections
                 new_robot.sections{i}.rotation(obj.sections{i}.rotation_angle);
@@ -134,6 +142,24 @@ classdef robot < handle
             end
             obj.position = [obj.on_ground_foot_x - calf_points(idx, 1), -min_y];
             % obj
+        end
+        
+        function move_to_angle(obj, angles)
+            num_section = length(obj.sections);
+            for i = 1: num_section
+                delta_alpha = angles(i) - obj.sections{i}.rotation_angle;
+                obj.sections{i}.rotation(delta_alpha);
+            end
+            obj.position = [0, 0];
+            obj.update_position();
+        end
+        
+        function rotation(obj, angles)
+            num_section = length(obj.sections);
+            for i = 1: num_section
+                obj.sections{i}.rotation(angles(i));
+            end
+            obj.update_position();
         end
         
         function uniform_move(obj, target_posture, time, fps, current_axes) 
