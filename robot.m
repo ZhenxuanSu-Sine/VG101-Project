@@ -25,6 +25,7 @@ classdef robot < handle
         on_ground_foot_x = 0
         
         random_threshold = [-pi / 2, pi / 2]
+        
     end
     
     methods
@@ -100,7 +101,7 @@ classdef robot < handle
             end
         end
         
-        function draw(obj, current_axes)
+        function draw(obj, current_axes,color)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             num_sections = size(obj.sections, 2);
@@ -109,7 +110,7 @@ classdef robot < handle
             % hold on;
             
             for i = 1: num_sections
-                obj.sections{i}.section_plot(current_axes, obj.position);
+                obj.sections{i}.section_plot(current_axes, obj.position,color);
             end
             % hold off;
         end
