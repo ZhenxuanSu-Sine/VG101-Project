@@ -101,7 +101,15 @@ classdef robot < handle
             end
         end
         
-        function draw(obj, current_axes,color)
+        function set_color(obj, colors)
+            assert(length(colors) == length(obj.sections));
+            num_sections = length(obj.sections);
+            for i = 1: num_sections
+                obj.sections{i}.color = colors(i, :);
+            end
+        end
+        
+        function draw(obj, current_axes)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             num_sections = size(obj.sections, 2);
@@ -110,7 +118,7 @@ classdef robot < handle
             % hold on;
             
             for i = 1: num_sections
-                obj.sections{i}.section_plot(current_axes, obj.position,color);
+                obj.sections{i}.section_plot(current_axes, obj.position);
             end
             % hold off;
         end

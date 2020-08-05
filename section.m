@@ -8,6 +8,8 @@ classdef section < handle
         outline = []
         rotation_angle = 0
         
+        color = [1, 1, 0]
+        
         link_flag = false;
         link_slider
         link_edit_field
@@ -24,13 +26,13 @@ classdef section < handle
             end
         end
         
-        function section_plot(obj, current_axes, robot_position,color)
+        function section_plot(obj, current_axes, robot_position)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             %default_color = 'y';
             %color = default_color;
             points = obj.position + obj.outline + robot_position;
-            patch(current_axes, points(:, 1), points(:, 2), color);
+            patch(current_axes, points(:, 1), points(:, 2), obj.color);
         end
          
         function update_position(obj, last_obj)
