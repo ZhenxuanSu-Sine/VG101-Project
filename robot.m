@@ -114,7 +114,7 @@ classdef robot < handle
             %   此处显示详细说明
             num_sections = size(obj.sections, 2);
             % clf;
-            cla(current_axes);
+%             cla(current_axes);
             % hold on;
             
             for i = 1: num_sections
@@ -131,6 +131,7 @@ classdef robot < handle
             for i = 1: num_sections
                 new_robot.sections{i}.rotation(obj.sections{i}.rotation_angle);
             end
+            new_robot.update_position();
         end
         
         function update_position(obj)
