@@ -1,0 +1,66 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="1006049945" file="C:\Users\Sine\VG101\Project\src\Robot Dancer.prj" location="C:\Users\Sine\VG101\Project\src" name="Robot Dancer" target="target.mlapps" target-name="打包为 App">
+    <param.appname>Robot Dancer</param.appname>
+    <param.authnamewatermark>Yuxuan Tang, Xiwen Wei, Zhenxuan Su</param.authnamewatermark>
+    <param.email>sinesu@sjtu.edu.cn</param.email>
+    <param.company>UM-SJTU Joint Institute</param.company>
+    <param.icon />
+    <param.icons />
+    <param.summary>A robot dancer whose movement can be customized.</param.summary>
+    <param.description />
+    <param.screenshot>C:\Users\Sine\AppData\Local\Temp\tp5c466d57_c887_42a9_860f_a8c7c10fb34c.png</param.screenshot>
+    <param.version>1.0</param.version>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.output>C:\Users\Sine\VG101\Project</param.output>
+    <param.guid>c41a7dc9-3939-41d0-a6be-e527d0afc95e</param.guid>
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.description />
+      <param.version />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\main.mlapp</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\connect.m</file>
+      <file>${PROJECT_ROOT}\connection_point.m</file>
+      <file>${PROJECT_ROOT}\dance.mlapp</file>
+      <file>${PROJECT_ROOT}\posture_editer.mlapp</file>
+      <file>${PROJECT_ROOT}\robot.m</file>
+      <file>${PROJECT_ROOT}\section.m</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="C:\Users\Sine\VG101" name="Project" optional="false">C:\Users\Sine\VG101\Project</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2020a</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

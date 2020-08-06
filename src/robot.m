@@ -191,6 +191,7 @@ classdef robot < handle
                     obj.sections{i}.rotation(delta_angle(i) / total_step);
                 end
                 obj.update_position();
+                cla(current_axes);
                 obj.draw(current_axes);
                 pause(1 / fps);
             end
